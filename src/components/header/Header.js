@@ -76,8 +76,9 @@ class NavBar extends React.Component {
     }
 
     search() {
+        let { fetchUser, fetchItems } = this.props;
         let userName = document.getElementById("searchBox").value;
-        userName && this.props.fetchUser(userName);
+        userName && fetchItems(userName); fetchUser(userName);
     }
 
     render() {

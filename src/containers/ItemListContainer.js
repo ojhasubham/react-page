@@ -1,7 +1,6 @@
 import React, { Component } from 'react';
 import { connect } from 'react-redux';
 import Items from '../components/items/Items';
-import User from '../components/user/User';
 
 class ItemListContainer extends Component {
     render() {
@@ -13,6 +12,7 @@ class ItemListContainer extends Component {
 
 export default connect(
     state => ({
-        json: state.ItemsReducer.json,
+        items: state.ItemsReducer.items,
+        status: state.ItemsReducer.status,
     })
 )(ItemListContainer)

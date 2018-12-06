@@ -1,80 +1,52 @@
 import React from 'react';
-import Table from '@material-ui/core/Table';
-import TableBody from '@material-ui/core/TableBody';
-import TableCell from '@material-ui/core/TableCell';
-import TableHead from '@material-ui/core/TableHead';
-import TableRow from '@material-ui/core/TableRow';
-import Paper from '@material-ui/core/Paper';
-import Grid from '@material-ui/core/Grid';
-import { SquareEditOutline } from 'mdi-material-ui';
-import DeleteIcon from '@material-ui/icons/Delete';
-import AddIcon from '@material-ui/icons/NoteAdd';
-import IconButton from '@material-ui/core/IconButton';
-import CircularProgress from '@material-ui/core/CircularProgress';
+import { withStyles } from '@material-ui/core/styles';
+import Card from '@material-ui/core/Card';
+import CardActionArea from '@material-ui/core/CardActionArea';
+import CardActions from '@material-ui/core/CardActions';
+import CardContent from '@material-ui/core/CardContent';
+import CardMedia from '@material-ui/core/CardMedia';
+import Button from '@material-ui/core/Button';
+import Typography from '@material-ui/core/Typography';
 
 const styles = {
-    styleTable: {
-        'margin': '31px 0px 0px 21px'
+    container: {
+        display: 'flex'
     },
-    loader: {
-        'margin': '20% 50%'
+    card: {
+        maxWidth: 345,
+        margin: 15
     },
+    media: {
+        // ⚠️ object-fit is not supported by IE 11.
+        // objectFit: 'cover',
+        height: 'auto'
+    },
+};
+
+function Items(props) {
+    const { classes, items, status } = props;
+    return (
+        <div className={classes.container}>
+            {items && items.length > 0 ?
+                items.map((item) => 
+                <Card key={item.id} className={classes.card}>
+                    <CardActionArea>
+                        <CardMedia
+                            component="img"
+                            alt="No image"
+                            className={classes.media}
+                            height="140"
+                            image={item.image_versions2.candidates[1].url}
+                        />
+                    </CardActionArea>
+                    {item && item.media_type == 2 ? <CardActions>
+                        <Button size="small" color="primary" onClick={()=>{window.open(item.video_versions[2].url)}}>
+                            Download
+                        </Button>
+                    </CardActions>: null}
+                </Card>) : null}
+        </div>
+    );
 }
 
-export default class Items extends React.Component {
-    constructor(props) {
-        super(props)
-    }
-
-    componentDidMount() { }
-
-    render() {
-        let { incident } = this.props;
-        return (
-            <div>
-                {/* {incident && incident.length > 0 ? <div style={styles.styleTable}>
-                    <Paper >
-                        <Table>
-                            <TableHead>
-                                <TableRow>
-                                    <TableCell>Id</TableCell>
-                                    <TableCell>Message</TableCell>
-                                    <TableCell>Status</TableCell>
-                                    <TableCell>Product</TableCell>
-                                    <TableCell>Severity</TableCell>
-                                    <TableCell>Start Timestamp</TableCell>
-                                    <TableCell>Title</TableCell>
-                                    <TableCell>Actions</TableCell>
-                                </TableRow>
-                            </TableHead>
-                            <TableBody>
-                                {incident.map(incident => {
-                                    return (
-                                        <TableRow key={incident.id}>
-                                            <TableCell>
-                                                {incident.id}
-                                            </TableCell>
-                                            <TableCell>{incident.message}</TableCell>
-                                            <TableCell>{incident.status}</TableCell>
-                                            <TableCell>{incident.product}</TableCell>
-                                            <TableCell>{incident.severity}</TableCell>
-                                            <TableCell>{incident.startTimestamp}</TableCell>
-                                            <TableCell>{incident.title}</TableCell>
-                                            <TableCell>
-                                                <IconButton style={{ padding: 5 }}><AddIcon /></IconButton>
-                                                <IconButton style={{ padding: 5 }} color="secondary" aria-label="Add an alarm"><DeleteIcon /></IconButton>
-
-                                            </TableCell>
-                                        </TableRow>
-                                    );
-                                })}
-                            </TableBody>
-                        </Table>
-                    </Paper>
-                </div> : incident && incident.error == "Internal Server Error" ?
-                        <h3 className="loading-indicator">No data found</h3>
-                        : <div><CircularProgress style={styles.loader} /></div>} */}
-            </div>
-        )
-    }
-};
+export default withStyles(styles)(Items);
