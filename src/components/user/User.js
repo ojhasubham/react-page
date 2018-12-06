@@ -1,17 +1,11 @@
 import React from 'react';
 import Avatar from '@material-ui/core/Avatar';
 import Grid from '@material-ui/core/Grid';
-import CircularProgress from '@material-ui/core/CircularProgress';
 import { withStyles } from '@material-ui/core/styles';
 import Card from '@material-ui/core/Card';
 import CardContent from '@material-ui/core/CardContent';
 
-import CardMedia from '@material-ui/core/CardMedia';
-import IconButton from '@material-ui/core/IconButton';
 import Typography from '@material-ui/core/Typography';
-import SkipPreviousIcon from '@material-ui/icons/SkipPrevious';
-import PlayArrowIcon from '@material-ui/icons/PlayArrow';
-import SkipNextIcon from '@material-ui/icons/SkipNext';
 const styles = theme => ({
   loader: {
     'margin': '20% 50%'
@@ -59,10 +53,10 @@ class User extends React.Component {
   componentDidMount() { }
 
   render() {
-    let { user, classes, theme, status } = this.props;
+    let { user, classes, status } = this.props;
     return (
       <div>
-        <Grid container container justify="center" alignItems="center">
+        <Grid container justify="center" alignItems="center">
           <Card className={classes.card}>
              {user && status == 'ok' && 
                <Avatar alt="Remy Sharp" src={user && user.profile_pic_url ? user.profile_pic_url:null}
